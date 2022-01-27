@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NewXXSY.Views.TestPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <inputLayout:SfTextInputLayout Hint="Xpath" x:Name="XpathInput">
+                    <Entry />
+                </inputLayout:SfTextInputLayout>
+                <Button Clicked="Button_Pressed"/>
+                <Label x:Name="HtmlLabel"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

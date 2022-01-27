@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:rotator="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
+xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+xmlns:carousel="clr-namespace:Syncfusion.SfCarousel.XForms;assembly=Syncfusion.SfCarousel.XForms"
+xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:NewXXSY.ViewModels" 
+             xmlns:models="clr-namespace:NewXXSY.Models"
+             x:Class="NewXXSY.Views.MainPage"
+             Title="主页">
+    <ContentPage.Content>
+
+        <listview:SfListView x:Name="platelist" ItemsSource="{Binding PlateCollection}" HeaderSize="185" ItemSize="60">
+            <listview:SfListView.HeaderTemplate>
+                <DataTemplate>
+                    <rotator:SfRotator x:Name="rotator" HorizontalOptions="Center" ItemsSource="{Binding AdsCollection}"
+                                       VerticalOptions="Center" BackgroundColor="#F9F9F9">
+                        <rotator:SfRotator.ItemTemplate>
+                            <DataTemplate>
+                                <listview:SfListView BackgroundColor="#F9F9F9" ItemsSource="{Binding}">
+                                    <listview:SfListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Ads">
+                                            <ViewCell>
+                                                <ViewCell.View>
+                                                    <Label HorizontalOptions="Center" VerticalOptions="Center"  Text="{Binding Name} "/>
+                                                </ViewCell.View>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </listview:SfListView.ItemTemplate>
+                                </listview:SfListView>
+                            </DataTemplate>
+                        </rotator:SfRotator.ItemTemplate>
+                    </rotator:SfRotator>
+                </DataTemplate>
+            </listview:SfListView.HeaderTemplate>
+            <listview:SfListView.ItemTemplate>
+                <DataTemplate x:DataType="models:Plate">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding Url}" />
+                        <Label Grid.Column="1" Text="{Binding Name}"/>
+                    </Grid>
+                </DataTemplate>
+            </listview:SfListView.ItemTemplate>
+        </listview:SfListView>
+    </ContentPage.Content>
+</ContentPage>
