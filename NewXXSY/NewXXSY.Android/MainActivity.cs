@@ -10,11 +10,14 @@ using Android.Content.Res;
 using Android.Webkit;
 using Android.Text;
 using Xamarin.Forms;
+using Xam.Shell.Badge.Droid;
+using Android.Views;
 
 [assembly: Dependency(typeof(NewXXSY.Droid.LanguageService))]
 namespace NewXXSY.Droid
 {
-    [Activity(Label = "NewXXSY", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(Label = "NewXXSY", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -23,7 +26,8 @@ namespace NewXXSY.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
+            BottomBar.Init();
+            Window.AddFlags(WindowManagerFlags.TranslucentStatus);
             LoadApplication(new App());
         }
 

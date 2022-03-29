@@ -11,6 +11,11 @@ namespace NewXXSY.Models
         public string Name { get; set; }
         public UriImageSource Image { get; set; }
         public string Group { get; set; }
-        public string Url { get; set; }
+        public string Fid { get; set; }
+
+
+        public string Topic { get; set; }
+        public string New { get; set; }
+        public string Today { get; set; }
     }
 }

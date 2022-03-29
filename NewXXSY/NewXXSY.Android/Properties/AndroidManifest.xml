@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="1.0" package="com.xxsy.newxxsy" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="25" android:targetSdkVersion="30" />
-	<application android:label="XXSY.Android" android:theme="@style/MainTheme"></application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.3" package="com.xxsy.newxxsy" android:installLocation="preferExternal">
+	<uses-sdk android:minSdkVersion="24" android:targetSdkVersion="30" />
+	<application android:label="XXSY" android:theme="@style/MainTheme"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

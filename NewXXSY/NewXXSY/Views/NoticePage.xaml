@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:pulltorefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms" xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:viewmodels="clr-namespace:NewXXSY.ViewModels" xmlns:converter="clr-namespace:NewXXSY.Converter" xmlns:models="clr-namespace:NewXXSY.Models" xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
+             x:Class="NewXXSY.Views.NoticePage" Title="消息中心">
+    <ContentPage.BindingContext>
+        <viewmodels:NoticeViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <converter:InverseBoolConverter x:Key="inverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <shimmer:SfShimmer IsVisible="{Binding First}" HeightRequest="100" Type="Article" Margin="10,0,10,0"/>
+            <pulltorefresh:SfPullToRefresh IsVisible="{Binding First, Converter={StaticResource inverter}}" TransitionMode ="SlideOnTop"
+                                           IsRefreshing="{Binding IsRefreshing}"
+                       x:Name="pullToRefresh">
+                <pulltorefresh:SfPullToRefresh.PullableContent>
+                    <listview:SfListView IsBusy="False" TapCommand="{Binding TapBar}"
+                                 x:Name="listView" ItemsSource="{Binding MessageCollection}"
+                                 ItemSize="80"
+                                 BackgroundColor="{AppThemeBinding Light='#F1F1F1', Dark='#2A2A2A'}"
+                                 LoadMoreOption="AutoOnScroll" 
+                                 >
+                        <listview:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Message">
+                                <Grid Padding="5,5,60,5">
+                                    <Grid.RowDefinitions >
+                                        <RowDefinition Height="3*" />
+                                        <RowDefinition Height="2*" />
+                                    </Grid.RowDefinitions>
+                                    <sfAvatarView:SfAvatarView Grid.RowSpan="2" AvatarShape="Custom" 
+                                    ImageSourceMemberPath="ImageSource" ContentType="Custom"                                                     
+                                    WidthRequest="40" HeightRequest="40"
+                                    VerticalOptions="Center" HorizontalOptions="Start"
+                                    ImageSource="{Binding Avatar}"/>
+
+                                    <Label Text="{Binding Title}" TranslationX="50" VerticalTextAlignment="End"
+                                           FontAttributes="Bold" Grid.Row="0" FontSize="13" LineBreakMode="CharacterWrap"
+                                           />
+                                    <Label Text="{Binding Time}" TranslationX="50"  Grid.Row="1" />
+                                </Grid>
+                            </DataTemplate>
+                        </listview:SfListView.ItemTemplate>
+                    </listview:SfListView>
+                </pulltorefresh:SfPullToRefresh.PullableContent>
+            </pulltorefresh:SfPullToRefresh>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:NewXXSY.Converter" xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:xforms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms" xmlns:viewmodels="clr-namespace:NewXXSY.ViewModels"
+             x:Class="NewXXSY.Views.ReplyView" x:DataType="viewmodels:ReplyViewModel">
+    <ContentPage.Resources>
+        <converter:InverseBoolConverter x:Key="inverter"/>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <button:SfButton Grid.Column="2" Margin="10" CornerRadius="10" Command="{Binding ReplyPost}"
+                             BackgroundColor="{AppThemeBinding Light='#0090f0', Dark='#222222'}">
+                <button:SfButton.Content>
+                    <StackLayout Orientation="Horizontal" Padding="10,5,5,5">
+                        <xforms:SfBusyIndicator x:Name="busy"
+                            AnimationType="Cupertino" IsBusy="False" TextColor="White" 
+                            WidthRequest="20" ViewBoxWidth="30"/>
+                        <Label Text="回帖" x:Name="text" HorizontalTextAlignment="End"
+                               FontSize="12" VerticalTextAlignment="Center" TextColor="White"/>
+                    </StackLayout>
+                </button:SfButton.Content>
+            </button:SfButton>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout>
+            <richTextEditor:SfRichTextEditor 
+                VerticalOptions="FillAndExpand"
+                x:Name="rte" HtmlText="{Binding HtmlText}" 
+                ToolbarOptions="Bold,Italic,Underline,Undo,NumberList,BulletList,Redo"
+                />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

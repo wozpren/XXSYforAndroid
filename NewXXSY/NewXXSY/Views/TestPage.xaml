@@ -10,7 +10,7 @@ xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Sync
                     <Entry />
                 </inputLayout:SfTextInputLayout>
                 <Button Clicked="Button_Pressed"/>
-                <Label x:Name="HtmlLabel"/>
+                <WebView x:Name="TestWeb"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

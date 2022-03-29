@@ -1,4 +1,5 @@
-﻿using NewXXSY.Views;
+﻿using NewXXSY.ViewModels;
+using NewXXSY.Views;
 using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -10,6 +11,7 @@ namespace NewXXSY
         public AppShell()
         {
             InitializeComponent();
+            BindingContext = new AppShellViewModel();
         }
     }
 }

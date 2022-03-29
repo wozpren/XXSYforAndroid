@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
+xmlns:badge="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
+xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
+xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:NewXXSY.Converter" xmlns:viewmodels="clr-namespace:NewXXSY.ViewModels" xmlns:models="clr-namespace:NewXXSY.Models"
+             x:Class="NewXXSY.Views.TieList" x:DataType="viewmodels:TieListViewModel">
+    <ContentPage.Resources>
+        <converter:InverseBoolConverter x:Key="inverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{AppThemeBinding Light='#eeeeee', Dark='#333333'}">
+            <shimmer:SfShimmer IsVisible="{Binding Loaded}" HeightRequest="100" Type="Article" Margin="10,0,10,0"/>
+            <listview:SfListView IsBusy="{Binding LoadMore}" IsVisible="{Binding Loaded, Converter={StaticResource inverter}}" 
+                                 x:Name="listView" ItemsSource="{Binding TieBarCollection}"
+                                 TapCommand="{Binding TapBar}"  ItemSize="90"
+                                 BackgroundColor="{AppThemeBinding Light='#F1F1F1', Dark='#2A2A2A'}"
+                                 LoadMoreOption="AutoOnScroll" LoadMoreCommand="{Binding LoadMoreItems}"
+                                 >
+                <listview:SfListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TieBar">
+                        <Grid Padding="10,5,10,5" BackgroundColor="{AppThemeBinding Light='#FFFFFF', Dark='#222222'}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.ColumnSpan="2" Text="{Binding Title}" FontSize="18"
+                                   FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                            <sfAvatarView:SfAvatarView Grid.Row="1" Grid.RowSpan="2" AvatarShape="Custom" 
+                            ImageSourceMemberPath="ImageSource"
+                            ContentType="Custom"                             
+                            WidthRequest="35" HeightRequest="35" TranslationY="1"
+                            VerticalOptions="Center" HorizontalOptions="Start"
+                            ImageSource="{Binding Avtar}"/>
+                            <Label Grid.Row="1" Text="{Binding Author}" TranslationX="40"/>
+                            <Label Grid.Row="2" Text="{Binding Time}" TranslationX="40"/>
+
+                            <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="End">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="回复:{0} 查看:{1}">
+                                        <Binding Path="Reply" />
+                                        <Binding Path="Watch" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                            <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="End">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="NewTime" />
+                                        <Binding Path="NewAuthor" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </Grid>
+                    </DataTemplate>
+                </listview:SfListView.ItemTemplate>
+            </listview:SfListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

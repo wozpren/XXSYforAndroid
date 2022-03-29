@@ -1,31 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+
+xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
 xmlns:rotator="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
 xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib"
 xmlns:carousel="clr-namespace:Syncfusion.SfCarousel.XForms;assembly=Syncfusion.SfCarousel.XForms"
 xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:NewXXSY.ViewModels" 
-             xmlns:models="clr-namespace:NewXXSY.Models"
+             xmlns:models="clr-namespace:NewXXSY.Models" xmlns:xforms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms" xmlns:extensions="clr-namespace:Syncfusion.DataSource.Extensions;assembly=Syncfusion.DataSource.Portable"
              x:Class="NewXXSY.Views.MainPage"
-             Title="主页">
+             Title="主页" x:Name="Page">
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <button:SfButton Margin="10" CornerRadius="10" Clicked="SfButton_Clicked"
+                             BackgroundColor="{AppThemeBinding Light='#0090f0', Dark='#444444'}">
+                <button:SfButton.Content>
+                    <StackLayout Orientation="Horizontal" Padding="10,5,5,5">
+                        <xforms:SfBusyIndicator
+                            AnimationType="Cupertino" IsBusy="False" TextColor="White" 
+                            WidthRequest="20" ViewBoxWidth="30"/>
+                        <Label Text="清除数据" HorizontalTextAlignment="End"
+                               FontSize="12" VerticalTextAlignment="Center" TextColor="White"/>
+                    </StackLayout>
+                </button:SfButton.Content>
+            </button:SfButton>
+
+            <button:SfButton Grid.Column="2" Margin="10" CornerRadius="10" Command="{Binding QianDao}"
+                             BackgroundColor="{AppThemeBinding Light='#0090f0', Dark='#444444'}">
+                <button:SfButton.Content>
+                    <StackLayout Orientation="Horizontal" Padding="10,5,5,5">
+                        <xforms:SfBusyIndicator x:Name="QianBar"
+                            AnimationType="Cupertino" IsBusy="False" TextColor="White" 
+                            WidthRequest="20" ViewBoxWidth="30"/>
+                        <Label Text="签到" x:Name="QianText" HorizontalTextAlignment="End"
+                               FontSize="12" VerticalTextAlignment="Center" TextColor="White"/>
+                    </StackLayout>
+                </button:SfButton.Content>
+            </button:SfButton>
+        </Grid>
+    </Shell.TitleView>
     <ContentPage.Content>
 
-        <listview:SfListView x:Name="platelist" ItemsSource="{Binding PlateCollection}" HeaderSize="185" ItemSize="60">
+        <listview:SfListView x:Name="platelist" TapCommand="{Binding TapList}" SelectionBackgroundColor="{AppThemeBinding Light='#eeeeee', Dark='#333333'}"
+                             ItemsSource="{Binding PlateCollection}" BackgroundColor="{AppThemeBinding Light='#eeeeee', Dark='#333333'}"
+                             HeaderSize="185" ItemSize="70">
             <listview:SfListView.HeaderTemplate>
                 <DataTemplate>
                     <rotator:SfRotator x:Name="rotator" HorizontalOptions="Center" ItemsSource="{Binding AdsCollection}"
-                                       VerticalOptions="Center" BackgroundColor="#F9F9F9">
+                                       VerticalOptions="Center" BackgroundColor="{AppThemeBinding Light='#eeeeee', Dark='#333333'}">
                         <rotator:SfRotator.ItemTemplate>
                             <DataTemplate>
-                                <listview:SfListView BackgroundColor="#F9F9F9" ItemsSource="{Binding}">
+                                <listview:SfListView
+                                    TapCommand="{Binding Source={x:Reference Page}, Path=BindingContext.TapBar}"
+                                    BackgroundColor="{AppThemeBinding Light='#FFFFFF', Dark='#222222'}" ItemsSource="{Binding}">
                                     <listview:SfListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Ads">
-                                            <ViewCell>
-                                                <ViewCell.View>
-                                                    <Label HorizontalOptions="Center" VerticalOptions="Center"  Text="{Binding Name} "/>
-                                                </ViewCell.View>
-                                            </ViewCell>
+                                            <Label TextColor="{AppThemeBinding Light='#222222', Dark='#EEEEEE'}"
+                                                        HorizontalOptions="Center" VerticalOptions="Center"  Text="{x:Binding Name}"/>
                                         </DataTemplate>
                                     </listview:SfListView.ItemTemplate>
                                 </listview:SfListView>
@@ -34,15 +71,36 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                     </rotator:SfRotator>
                 </DataTemplate>
             </listview:SfListView.HeaderTemplate>
+            <listview:SfListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" BackgroundColor="{AppThemeBinding Light='#dddddd', Dark='#444444'}">
+                        <Label x:DataType="extensions:GroupResult" Text="{Binding Key}" 
+                        TextColor="{AppThemeBinding Light='#111111', Dark='#ffffff'}"
+                        FontSize="22" FontAttributes="Bold"
+                        VerticalTextAlignment="Center"/>
+                    </StackLayout>
+                </DataTemplate>
+            </listview:SfListView.GroupHeaderTemplate>
             <listview:SfListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Plate">
-                    <Grid>
+                    <Grid BackgroundColor="{AppThemeBinding Light='#FFFFFF', Dark='#222222'}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="120" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Url}" />
-                        <Label Grid.Column="1" Text="{Binding Name}"/>
+                        <Image Source="{Binding Image}" />
+                        <StackLayout Grid.Column="1" Spacing="0">
+                            <Label LineBreakMode="NoWrap">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Name}" TextColor="{AppThemeBinding Light='#303030', Dark='#efefef'}"  FontAttributes="Bold"/>
+                                        <Span Text="{Binding Today}" TextColor="#F55532"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="{Binding Topic}"/>
+                            <Label Text="{Binding New}" LineBreakMode="MiddleTruncation" TranslationY="2"/>
+                        </StackLayout>
                     </Grid>
                 </DataTemplate>
             </listview:SfListView.ItemTemplate>

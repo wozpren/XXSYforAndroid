@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:rotator="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
+xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:models="clr-namespace:NewXXSY.Models" xmlns:contrl="clr-namespace:NewXXSY.Contrl" xmlns:converter="clr-namespace:NewXXSY.Converter" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" xmlns:viewmodels="clr-namespace:NewXXSY.ViewModels"
+             x:Class="NewXXSY.Views.TiePage" Title="{Binding Title}" x:Name="Tie" x:DataType="viewmodels:TieViewModel">
+    <ContentPage.Resources>
+        <converter:InverseBoolConverter x:Key="inverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <rotator:SfRotator x:Name="rotator" BackgroundColor="White" ItemsSource="{Binding PostCollection}"
+                               EnableLooping="False" DotPlacement="None" SelectedIndex="{Binding Index, Mode=TwoWay}">
+                <rotator:SfRotator.ItemTemplate>
+                    <DataTemplate x:DataType="models:Post">
+                        <Grid Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding Author}"/>
+                            <Label Text="{Binding Floor}" HorizontalTextAlignment="End"/>
+                            <contrl:PostWebView Grid.Row="1" Source="{Binding Html}"
+                            />
+                        </Grid>
+                    </DataTemplate>
+                </rotator:SfRotator.ItemTemplate>
+            </rotator:SfRotator>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="2" Text="回帖" Command="{Binding ReplyPost}"
+                        Margin="10" CornerRadius="10"
+                        BackgroundColor="{AppThemeBinding Light='#0090f0', Dark='#222222'}"
+                        TextColor="{AppThemeBinding Light='#eeeeee', Dark='#222222'}"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
